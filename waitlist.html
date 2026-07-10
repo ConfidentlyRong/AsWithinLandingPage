@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Join the Waitlist | As Within</title>
+
+    <meta
+      name="description"
+      content="Join the As Within waitlist and be the first to hear about launch updates, early news, and upcoming releases."
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="waitlist-page">
+    <header class="site-header"> 
+        <a href="index.html" class="brand-name header-brand" aria-label="As Within home" > 
+            <span class="brand-as">As</span><span class="brand-within">Within</span>
+        </a> 
+        <nav class="nav-links" aria-label="Main navigation"> 
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+    <main class="waitlist-main">
+      <section class="waitlist-section">
+        <div class="waitlist-content">
+          <p class="waitlist-eyebrow">Coming Soon</p>
+
+          <h1 class="waitlist-title">Join the Waitlist</h1>
+
+          <p class="waitlist-description">
+            Be the first to know when As Within is ready. Join the waitlist
+            for launch updates, early news, and more.
+          </p>
+
+          <form
+            id="waitlist-form"
+            class="waitlist-form"
+            action="https://mailchi.us19.list-manage.com/subscribe/post?u=6b61a20b290dcc5f39ccc1148&amp;id=514ab0c9e6&amp;f_id=003d6fe7f0"
+            method="post"
+          >
+            <div class="waitlist-form-field">
+              <label class="waitlist-form-label" for="waitlist-first-name">First Name</label>
+
+              <input
+                id="waitlist-first-name"
+                name="FNAME"
+                type="text"
+                autocomplete="given-name"
+                placeholder="Your first name"
+              />
+            </div>
+
+            <div class="waitlist-form-field">
+              <label class="waitlist-form-label" for="waitlist-email">Email Address</label>
+
+              <input
+                id="waitlist-email"
+                name="EMAIL"
+                type="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <input
+              type="hidden"
+              name="tags"
+              value="24264911"
+            />
+
+            <div
+              aria-hidden="true"
+              class="mailchimp-honeypot"
+            >
+              <input
+                type="text"
+                name="b_6b61a20b290dcc5f39ccc1148_514ab0c9e6"
+                tabindex="-1"
+                value=""
+              />
+            </div>
+
+            <button
+              class="waitlist-button"
+              type="submit"
+              name="subscribe"
+            >
+              Join the Waitlist
+            </button>
+          </form>
+          
+          <p
+            id="waitlist-form-status"
+            class="waitlist-form-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+
+          <p class="waitlist-privacy-text">
+            We’ll only email you with As Within news and launch updates.
+          </p>
+        </div>
+        <img
+          class="waitlist-floating-image"
+          src="assets/section-two-image.png"
+          alt="As Within preview"
+        />
+      </section>
+    </main>
+    <script>
+        const waitlistForm = document.getElementById("waitlist-form");
+        const waitlistStatus = document.getElementById(
+            "waitlist-form-status"
+        );
+
+        waitlistForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const submitButton = waitlistForm.querySelector(
+            'button[type="submit"]'
+            );
+
+            const formData = new FormData(waitlistForm);
+            const callbackName = `mailchimpCallback_${Date.now()}`;
+            const mailchimpUrl = new URL(waitlistForm.action);
+
+            mailchimpUrl.pathname = mailchimpUrl.pathname.replace(
+            "/post",
+            "/post-json"
+            );
+
+            formData.forEach((value, key) => {
+            mailchimpUrl.searchParams.set(key, value);
+            });
+
+            mailchimpUrl.searchParams.set("c", callbackName);
+
+            const requestScript = document.createElement("script");
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Joining…";
+
+            waitlistStatus.textContent = "";
+            waitlistStatus.className = "waitlist-form-status";
+
+            function cleanUpRequest() {
+            requestScript.remove();
+            delete window[callbackName];
+
+            submitButton.disabled = false;
+            submitButton.textContent = "Join the Waitlist";
+            }
+
+            window[callbackName] = (response) => {
+            const responseMessage = response.msg || "";
+
+            if (response.result === "success") {
+                waitlistStatus.textContent =
+                "Thanks for subscribing to our invite list! We’ll let you know when As Within is ready.";
+
+                waitlistStatus.classList.add(
+                "waitlist-form-status-success"
+                );
+
+                waitlistForm.reset();
+            } else if (
+                responseMessage.toLowerCase().includes("already subscribed")
+            ) {
+                waitlistStatus.textContent =
+                "You’re already on our invite list! We’ll keep you updated.";
+
+                waitlistStatus.classList.add(
+                "waitlist-form-status-success"
+                );
+            } else {
+                const temporaryElement = document.createElement("div");
+                temporaryElement.innerHTML = responseMessage;
+
+                waitlistStatus.textContent =
+                temporaryElement.textContent ||
+                "We couldn’t add you to the list. Please check your information and try again.";
+
+                waitlistStatus.classList.add(
+                "waitlist-form-status-error"
+                );
+            }
+
+            cleanUpRequest();
+            };
+
+            requestScript.onerror = () => {
+            waitlistStatus.textContent =
+                "We couldn’t connect to the invite list. Please try again.";
+
+            waitlistStatus.classList.add(
+                "waitlist-form-status-error"
+            );
+
+            cleanUpRequest();
+            };
+
+            requestScript.src = mailchimpUrl.toString();
+            document.body.appendChild(requestScript);
+        });
+    </script>
+  </body>
+</html>
