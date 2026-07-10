@@ -483,7 +483,7 @@ h1 {
   margin: 0;
   font-size: clamp(3.5rem, 4vw, 4rem);
   font-family: "Belgium", "Quicksand", Arial, Helvetica, sans-serif;
-  font-weight: 400;
+  font-weight: 10;
   letter-spacing: 0.03em;
   line-height: 0.95;
 }
