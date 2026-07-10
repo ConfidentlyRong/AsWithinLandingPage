@@ -702,7 +702,7 @@ h2 {
   z-index: 1;
   top: 220px;
   right: -220px;
-  width: min(58vw, 540px);
+  width: clamp(400px, 50vw, 640px);
   transform: rotate(-28deg);
   border-radius: 24px;
   transform-origin: left;
