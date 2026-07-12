@@ -67,7 +67,8 @@ document.addEventListener("keydown", (event) => {
 
 const observerOptions = {
   root: null,
-  threshold: 0.55,
+  threshold: 0,
+  rootMargin: "-45% 0px -45% 0px",
 };
 
 const sectionObserver = new IntersectionObserver((entries) => {
